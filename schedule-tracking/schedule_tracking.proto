@@ -11,7 +11,7 @@ service ScheduleTracking{
 
   rpc Update(UpdateTaskRequest) returns (google.protobuf.Empty) {};
 
-  rpc DeleteFromTrack(DeleteFromTrackingRequest) returns (google.protobuf.Empty) {};
+  rpc DeleteFromTracking(DeleteFromTrackingRequest) returns (google.protobuf.Empty) {};
 
   rpc GetInfoAboutTrack(GetInfoAboutTrackRequest) returns (GetInfoAboutTrackResponse) {};
   //yes
