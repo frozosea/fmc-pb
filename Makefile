@@ -1,5 +1,5 @@
 user-proto:
-	protoc --proto_path=${PWD}/user  --go_out=${PWD}/ser   --go-grpc_out=${PWD}/user    -I ${PWD}/user user.proto
+	protoc --proto_path=${PWD}/user  --go_out=${PWD}/user   --go-grpc_out=${PWD}/user    -I ${PWD}/user user.proto
 
 schedule-tracking-proto:
 	protoc --proto_path=${PWD}/schedule-tracking   --go_out=${PWD}/schedule-tracking    --go-grpc_out=${PWD}/schedule-tracking    -I ${PWD}/schedule-tracking  schedule_tracking.proto
@@ -10,5 +10,5 @@ freight-proto:
 tracking-proto:
 	PROTOC_GEN_TS_PATH="node_modules/.bin/protoc-gen-ts" \
     protoc --proto_path=${PWD}/tracking  --go_out=${PWD}/tracking --go-grpc_out=${PWD}/tracking --js_out="import_style=commonjs,binary:${PWD}/tracking/" --ts_out="${PWD}/tracking" -I ${PWD}/tracking tracking.proto \
-    STRING1='import * as grpc from "grpc";' STRING2='import * as grpc from "@grpc/grpc-js";'  awk 'NR==7 { sub(${STRING1}, ${STRING2}) }'
 
+proto: user-proto schedule-tracking-proto tracking-proto

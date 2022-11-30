@@ -28,7 +28,7 @@ type ScheduleTrackingClient interface {
 	//yes
 	AddBillNosOnTrack(ctx context.Context, in *AddOnTrackRequest, opts ...grpc.CallOption) (*AddOnTrackResponse, error)
 	Update(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteFromTrack(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetInfoAboutTrack(ctx context.Context, in *GetInfoAboutTrackRequest, opts ...grpc.CallOption) (*GetInfoAboutTrackResponse, error)
 	//yes
 	GetTimeZone(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTimeZoneResponse, error)
@@ -69,9 +69,9 @@ func (c *scheduleTrackingClient) Update(ctx context.Context, in *UpdateTaskReque
 	return out, nil
 }
 
-func (c *scheduleTrackingClient) DeleteFromTrack(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *scheduleTrackingClient) DeleteFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/DeleteFromTrack", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/DeleteFromTracking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ type ScheduleTrackingServer interface {
 	//yes
 	AddBillNosOnTrack(context.Context, *AddOnTrackRequest) (*AddOnTrackResponse, error)
 	Update(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error)
-	DeleteFromTrack(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error)
+	DeleteFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error)
 	GetInfoAboutTrack(context.Context, *GetInfoAboutTrackRequest) (*GetInfoAboutTrackResponse, error)
 	//yes
 	GetTimeZone(context.Context, *emptypb.Empty) (*GetTimeZoneResponse, error)
@@ -125,8 +125,8 @@ func (UnimplementedScheduleTrackingServer) AddBillNosOnTrack(context.Context, *A
 func (UnimplementedScheduleTrackingServer) Update(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedScheduleTrackingServer) DeleteFromTrack(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFromTrack not implemented")
+func (UnimplementedScheduleTrackingServer) DeleteFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteFromTracking not implemented")
 }
 func (UnimplementedScheduleTrackingServer) GetInfoAboutTrack(context.Context, *GetInfoAboutTrackRequest) (*GetInfoAboutTrackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfoAboutTrack not implemented")
@@ -201,20 +201,20 @@ func _ScheduleTracking_Update_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScheduleTracking_DeleteFromTrack_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ScheduleTracking_DeleteFromTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteFromTrackingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScheduleTrackingServer).DeleteFromTrack(ctx, in)
+		return srv.(ScheduleTrackingServer).DeleteFromTracking(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/schedule_tacking.ScheduleTracking/DeleteFromTrack",
+		FullMethod: "/schedule_tacking.ScheduleTracking/DeleteFromTracking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScheduleTrackingServer).DeleteFromTrack(ctx, req.(*DeleteFromTrackingRequest))
+		return srv.(ScheduleTrackingServer).DeleteFromTracking(ctx, req.(*DeleteFromTrackingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -275,8 +275,8 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ScheduleTracking_Update_Handler,
 		},
 		{
-			MethodName: "DeleteFromTrack",
-			Handler:    _ScheduleTracking_DeleteFromTrack_Handler,
+			MethodName: "DeleteFromTracking",
+			Handler:    _ScheduleTracking_DeleteFromTracking_Handler,
 		},
 		{
 			MethodName: "GetInfoAboutTrack",
