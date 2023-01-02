@@ -177,15 +177,9 @@ service ScheduleTracking{
   rpc CheckNumberExists(CheckNumberExistsRequest) returns (CheckNumberExistsResponse) {};
 }
 message AddMarkOnTrackingRequest{
-//  int64 user_id = 1;
-  bool is_container = 2;
-  repeated string numbers = 3;
-  repeated string emails = 4;
-  string email_message_subject = 5;
-  string time = 6;
+  string number = 2;
 }
 message CheckNumberExistsRequest{
-//  int64 user_id = 1;
   string number = 2;
   bool is_container = 3;
 }

@@ -641,7 +641,6 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ScheduleTrackingClient interface {
-	//No
 	MarkBillNoOnTrack(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MarkContainerOnTrack(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MarkContainerWasArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -726,7 +725,6 @@ func (c *scheduleTrackingClient) CheckNumberExists(ctx context.Context, in *Chec
 // All implementations must embed UnimplementedScheduleTrackingServer
 // for forward compatibility
 type ScheduleTrackingServer interface {
-	//No
 	MarkBillNoOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
 	MarkContainerOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
 	MarkContainerWasArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
