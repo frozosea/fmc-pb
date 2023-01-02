@@ -1,0 +1,491 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "schedule_tracking.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ScheduleTracking"
+    },
+    {
+      "name": "Archive"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/schedule/bills": {
+      "delete": {
+        "operationId": "ScheduleTracking_DeleteBillsFromTracking",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingDeleteFromTrackingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      },
+      "post": {
+        "operationId": "ScheduleTracking_AddBillNosOnTrack",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingAddOnTrackResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      },
+      "put": {
+        "operationId": "ScheduleTracking_UpdateBill",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingUpdateTaskRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      }
+    },
+    "/schedule/containers": {
+      "delete": {
+        "operationId": "ScheduleTracking_DeleteContainersFromTracking",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingDeleteFromTrackingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      },
+      "post": {
+        "operationId": "ScheduleTracking_AddContainersOnTrack",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingAddOnTrackResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      },
+      "put": {
+        "operationId": "ScheduleTracking_UpdateContainer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingUpdateTaskRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      }
+    },
+    "/schedule/info": {
+      "get": {
+        "operationId": "ScheduleTracking_GetInfoAboutTrack",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingGetInfoAboutTrackResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "number",
+            "description": "int64 user_id = 3;",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ScheduleTracking"
+        ]
+      }
+    },
+    "/schedule/timezone": {
+      "get": {
+        "operationId": "ScheduleTracking_GetTimeZone",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/schedule_tackingGetTimeZoneResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "ScheduleTracking"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "schedule_tackingAddOnTrackRequest": {
+      "type": "object",
+      "properties": {
+        "numbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "int64 user_id = 1;"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "emailMessageSubject": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string"
+        }
+      }
+    },
+    "schedule_tackingAddOnTrackResponse": {
+      "type": "object",
+      "properties": {
+        "baseResponse": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schedule_tackingBaseAddOnTrackResponse"
+          }
+        },
+        "alreadyOnTrack": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "schedule_tackingBaseAddOnTrackResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "number": {
+          "type": "string"
+        },
+        "nextRunTime": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "schedule_tackingDeleteFromTrackingRequest": {
+      "type": "object",
+      "properties": {
+        "numbers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "bool is_container = 3;",
+          "title": "int64 user_id = 1;"
+        }
+      }
+    },
+    "schedule_tackingGetAllBillsContainerResponse": {
+      "type": "object",
+      "properties": {
+        "bills": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schedule_tackingTrackingByBillNumberResponse"
+          }
+        },
+        "containers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schedule_tackingTrackingByContainerNumberResponse"
+          }
+        }
+      }
+    },
+    "schedule_tackingGetInfoAboutTrackResponse": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "isContainer": {
+          "type": "boolean"
+        },
+        "isOnTrack": {
+          "type": "boolean"
+        },
+        "scheduleTrackingInfo": {
+          "$ref": "#/definitions/schedule_tackingScheduleTrackingInfo"
+        }
+      }
+    },
+    "schedule_tackingGetTimeZoneResponse": {
+      "type": "object",
+      "properties": {
+        "timeZone": {
+          "type": "string"
+        }
+      }
+    },
+    "schedule_tackingInfoAboutMoving": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "operationName": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "vessel": {
+          "type": "string"
+        }
+      }
+    },
+    "schedule_tackingScheduleTrackingInfo": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string"
+        },
+        "emails": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "subject": {
+          "type": "string"
+        }
+      }
+    },
+    "schedule_tackingTrackingByBillNumberResponse": {
+      "type": "object",
+      "properties": {
+        "billNo": {
+          "type": "string"
+        },
+        "scac": {
+          "type": "string"
+        },
+        "infoAboutMoving": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schedule_tackingInfoAboutMoving"
+          }
+        },
+        "etaFinalDelivery": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "schedule_tackingTrackingByContainerNumberResponse": {
+      "type": "object",
+      "properties": {
+        "container": {
+          "type": "string"
+        },
+        "containerSize": {
+          "type": "string"
+        },
+        "scac": {
+          "type": "string"
+        },
+        "infoAboutMoving": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/schedule_tackingInfoAboutMoving"
+          }
+        }
+      }
+    },
+    "schedule_tackingUpdateTaskRequest": {
+      "type": "object",
+      "properties": {
+        "req": {
+          "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
+        },
+        "isContainers": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

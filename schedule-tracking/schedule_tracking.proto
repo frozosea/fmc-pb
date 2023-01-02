@@ -1,33 +1,74 @@
 syntax = "proto3";
 package schedule_tacking;
 import "google/protobuf/empty.proto";
+import "google/api/annotation.proto";
 option go_package = ".";
 
 service ScheduleTracking{
-  //yes
-  rpc AddContainersOnTrack(AddOnTrackRequest) returns (AddOnTrackResponse) {};
-  //yes
-  rpc AddBillNosOnTrack(AddOnTrackRequest) returns (AddOnTrackResponse) {};
+  rpc AddContainersOnTrack(AddOnTrackRequest) returns (AddOnTrackResponse) {
+    option (google.api.http) = {
+      post: "/schedule/containers",
+      body: "*"
+    };
+  };
+  rpc AddBillNosOnTrack(AddOnTrackRequest) returns (AddOnTrackResponse) {
+    option (google.api.http) = {
+      post: "/schedule/bills",
+      body: "*"
+    };
+  };
 
-  rpc Update(UpdateTaskRequest) returns (google.protobuf.Empty) {};
+  rpc UpdateContainer(UpdateTaskRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/schedule/containers",
+      body: "*"
+    };
+  };
 
-  rpc DeleteFromTracking(DeleteFromTrackingRequest) returns (google.protobuf.Empty) {};
+  rpc UpdateBill(UpdateTaskRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/schedule/bills",
+      body: "*"
+    };
+  };
 
-  rpc GetInfoAboutTrack(GetInfoAboutTrackRequest) returns (GetInfoAboutTrackResponse) {};
-  //yes
-  rpc GetTimeZone(google.protobuf.Empty) returns (GetTimeZoneResponse) {};
-  //yes
+  rpc DeleteContainersFromTracking(DeleteFromTrackingRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/schedule/containers",
+      body: "*"
+    };
+  };
+
+  rpc DeleteBillsFromTracking(DeleteFromTrackingRequest) returns (google.protobuf.Empty){
+    option (google.api.http) = {
+      delete: "/schedule/bills",
+      body: "*"
+    };
+  };
+
+  rpc GetInfoAboutTrack(GetInfoAboutTrackRequest) returns (GetInfoAboutTrackResponse) {
+    option (google.api.http) = {
+      get: "/schedule/info"
+    };
+  };
+  rpc GetTimeZone(google.protobuf.Empty) returns (GetTimeZoneResponse) {
+    option (google.api.http) = {
+      get: "/schedule/timezone"
+    };
+  };
 }
+
 service Archive{
-  rpc GetArchive(GetArchiveRequest) returns (GetAllBillsContainerResponse) {};
+  rpc GetArchive(google.protobuf.Empty) returns (GetAllBillsContainerResponse) {};
 }
+
 message UpdateTrackingTimeRequest{
   repeated string numbers = 1;
   string time = 2;
-  int64 user_id = 3;
+  //  int64 user_id = 3;
 }
 message AddOnTrackRequest{
-  int64 user_id = 1;
+  //  int64 user_id = 1;
   repeated string numbers = 2;
   repeated string emails = 3;
   string email_message_subject = 4;
@@ -51,7 +92,7 @@ message AddOnTrackResponse{
 }
 message GetInfoAboutTrackRequest{
   string number = 1;
-  int64 user_id = 3;
+  //  int64 user_id = 3;
 }
 message ScheduleTrackingInfo{
   string time = 1;
@@ -65,16 +106,14 @@ message GetInfoAboutTrackResponse{
   ScheduleTrackingInfo schedule_tracking_info = 5;
 }
 message DeleteFromTrackingRequest{
-  int64 user_id = 1;
+  //  int64 user_id = 1;
   repeated string numbers = 2;
-  bool is_container = 3;
+  //  bool is_container = 3;
 }
 message GetTimeZoneResponse{
   string time_zone = 1;
 }
-message GetArchiveRequest{
-  int64 user_id = 1;
-}
+
 message InfoAboutMoving{
   int64 time = 1;
   string operation_name = 2;

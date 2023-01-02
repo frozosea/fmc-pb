@@ -1,0 +1,255 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "tracking.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "TrackingByContainerNumber"
+    },
+    {
+      "name": "TrackingByBillNumber"
+    },
+    {
+      "name": "ScacService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/scac/bills": {
+      "get": {
+        "operationId": "ScacService_GetBillScac",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/trackingGetAllScacResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "ScacService"
+        ]
+      }
+    },
+    "/scac/container": {
+      "get": {
+        "operationId": "ScacService_GetContainerScac",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/trackingGetAllScacResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "ScacService"
+        ]
+      }
+    },
+    "/tracking/bill": {
+      "post": {
+        "operationId": "TrackingByBillNumber_TrackByBillNumber",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/trackingTrackingByBillNumberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/trackingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TrackingByBillNumber"
+        ]
+      }
+    },
+    "/tracking/container": {
+      "post": {
+        "operationId": "TrackingByContainerNumber_TrackByContainerNumber",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/trackingTrackingByContainerNumberResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/trackingRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TrackingByContainerNumber"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "trackingGetAllScacResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trackingScac"
+          }
+        }
+      }
+    },
+    "trackingInfoAboutMoving": {
+      "type": "object",
+      "properties": {
+        "time": {
+          "type": "string",
+          "format": "int64"
+        },
+        "operationName": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "vessel": {
+          "type": "string"
+        }
+      }
+    },
+    "trackingRequest": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "scac": {
+          "type": "string"
+        }
+      }
+    },
+    "trackingScac": {
+      "type": "object",
+      "properties": {
+        "scac": {
+          "type": "string"
+        },
+        "fullname": {
+          "type": "string"
+        }
+      }
+    },
+    "trackingTrackingByBillNumberResponse": {
+      "type": "object",
+      "properties": {
+        "billNo": {
+          "type": "string"
+        },
+        "scac": {
+          "type": "string"
+        },
+        "infoAboutMoving": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trackingInfoAboutMoving"
+          }
+        },
+        "etaFinalDelivery": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "trackingTrackingByContainerNumberResponse": {
+      "type": "object",
+      "properties": {
+        "container": {
+          "type": "string"
+        },
+        "containerSize": {
+          "type": "string"
+        },
+        "scac": {
+          "type": "string"
+        },
+        "infoAboutMoving": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/trackingInfoAboutMoving"
+          }
+        }
+      }
+    }
+  }
+}

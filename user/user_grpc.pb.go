@@ -23,16 +23,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserClient interface {
-	//yes
 	AddContainerToAccount(ctx context.Context, in *AddContainerToAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	//no
 	AddBillNumberToAccount(ctx context.Context, in *AddContainerToAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	//yes
 	DeleteContainersFromAccount(ctx context.Context, in *DeleteContainersFromAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	//no
 	DeleteBillNumbersFromAccount(ctx context.Context, in *DeleteContainersFromAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	//yes
-	GetAll(ctx context.Context, in *GetAllContainersFromAccountRequest, opts ...grpc.CallOption) (*GetAllContainersResponse, error)
+	GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllContainersResponse, error)
 }
 
 type userClient struct {
@@ -79,7 +74,7 @@ func (c *userClient) DeleteBillNumbersFromAccount(ctx context.Context, in *Delet
 	return out, nil
 }
 
-func (c *userClient) GetAll(ctx context.Context, in *GetAllContainersFromAccountRequest, opts ...grpc.CallOption) (*GetAllContainersResponse, error) {
+func (c *userClient) GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllContainersResponse, error) {
 	out := new(GetAllContainersResponse)
 	err := c.cc.Invoke(ctx, "/user.User/GetAll", in, out, opts...)
 	if err != nil {
@@ -92,16 +87,11 @@ func (c *userClient) GetAll(ctx context.Context, in *GetAllContainersFromAccount
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
 type UserServer interface {
-	//yes
 	AddContainerToAccount(context.Context, *AddContainerToAccountRequest) (*emptypb.Empty, error)
-	//no
 	AddBillNumberToAccount(context.Context, *AddContainerToAccountRequest) (*emptypb.Empty, error)
-	//yes
 	DeleteContainersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error)
-	//no
 	DeleteBillNumbersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error)
-	//yes
-	GetAll(context.Context, *GetAllContainersFromAccountRequest) (*GetAllContainersResponse, error)
+	GetAll(context.Context, *emptypb.Empty) (*GetAllContainersResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -121,7 +111,7 @@ func (UnimplementedUserServer) DeleteContainersFromAccount(context.Context, *Del
 func (UnimplementedUserServer) DeleteBillNumbersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillNumbersFromAccount not implemented")
 }
-func (UnimplementedUserServer) GetAll(context.Context, *GetAllContainersFromAccountRequest) (*GetAllContainersResponse, error) {
+func (UnimplementedUserServer) GetAll(context.Context, *emptypb.Empty) (*GetAllContainersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
@@ -210,7 +200,7 @@ func _User_DeleteBillNumbersFromAccount_Handler(srv interface{}, ctx context.Con
 }
 
 func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAllContainersFromAccountRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -222,7 +212,7 @@ func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interfa
 		FullMethod: "/user.User/GetAll",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServer).GetAll(ctx, req.(*GetAllContainersFromAccountRequest))
+		return srv.(UserServer).GetAll(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -349,15 +339,11 @@ var UserFeedback_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthClient interface {
-	//Yes
 	RegisterUser(ctx context.Context, in *RegisterUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	//Yes
 	LoginUser(ctx context.Context, in *LoginUserRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	//Yes
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	//Yes
-	Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error)
-	GetUserIdByJwtToken(ctx context.Context, in *GetUserIdByJwtTokenRequest, opts ...grpc.CallOption) (*GetUserIdByJwtTokenResponse, error)
+	Auth(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*AuthResponse, error)
+	GetUserIdByJwtToken(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetUserIdByJwtTokenResponse, error)
 	SendRecoveryEmail(ctx context.Context, in *SendRecoveryEmailRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RecoveryUser(ctx context.Context, in *RecoveryUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
@@ -397,7 +383,7 @@ func (c *authClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, 
 	return out, nil
 }
 
-func (c *authClient) Auth(ctx context.Context, in *AuthRequest, opts ...grpc.CallOption) (*AuthResponse, error) {
+func (c *authClient) Auth(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*AuthResponse, error) {
 	out := new(AuthResponse)
 	err := c.cc.Invoke(ctx, "/user.Auth/Auth", in, out, opts...)
 	if err != nil {
@@ -406,7 +392,7 @@ func (c *authClient) Auth(ctx context.Context, in *AuthRequest, opts ...grpc.Cal
 	return out, nil
 }
 
-func (c *authClient) GetUserIdByJwtToken(ctx context.Context, in *GetUserIdByJwtTokenRequest, opts ...grpc.CallOption) (*GetUserIdByJwtTokenResponse, error) {
+func (c *authClient) GetUserIdByJwtToken(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetUserIdByJwtTokenResponse, error) {
 	out := new(GetUserIdByJwtTokenResponse)
 	err := c.cc.Invoke(ctx, "/user.Auth/GetUserIdByJwtToken", in, out, opts...)
 	if err != nil {
@@ -437,15 +423,11 @@ func (c *authClient) RecoveryUser(ctx context.Context, in *RecoveryUserRequest, 
 // All implementations must embed UnimplementedAuthServer
 // for forward compatibility
 type AuthServer interface {
-	//Yes
 	RegisterUser(context.Context, *RegisterUserRequest) (*emptypb.Empty, error)
-	//Yes
 	LoginUser(context.Context, *LoginUserRequest) (*LoginResponse, error)
-	//Yes
 	RefreshToken(context.Context, *RefreshTokenRequest) (*LoginResponse, error)
-	//Yes
-	Auth(context.Context, *AuthRequest) (*AuthResponse, error)
-	GetUserIdByJwtToken(context.Context, *GetUserIdByJwtTokenRequest) (*GetUserIdByJwtTokenResponse, error)
+	Auth(context.Context, *emptypb.Empty) (*AuthResponse, error)
+	GetUserIdByJwtToken(context.Context, *emptypb.Empty) (*GetUserIdByJwtTokenResponse, error)
 	SendRecoveryEmail(context.Context, *SendRecoveryEmailRequest) (*emptypb.Empty, error)
 	RecoveryUser(context.Context, *RecoveryUserRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedAuthServer()
@@ -464,10 +446,10 @@ func (UnimplementedAuthServer) LoginUser(context.Context, *LoginUserRequest) (*L
 func (UnimplementedAuthServer) RefreshToken(context.Context, *RefreshTokenRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
 }
-func (UnimplementedAuthServer) Auth(context.Context, *AuthRequest) (*AuthResponse, error) {
+func (UnimplementedAuthServer) Auth(context.Context, *emptypb.Empty) (*AuthResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Auth not implemented")
 }
-func (UnimplementedAuthServer) GetUserIdByJwtToken(context.Context, *GetUserIdByJwtTokenRequest) (*GetUserIdByJwtTokenResponse, error) {
+func (UnimplementedAuthServer) GetUserIdByJwtToken(context.Context, *emptypb.Empty) (*GetUserIdByJwtTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserIdByJwtToken not implemented")
 }
 func (UnimplementedAuthServer) SendRecoveryEmail(context.Context, *SendRecoveryEmailRequest) (*emptypb.Empty, error) {
@@ -544,7 +526,7 @@ func _Auth_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Auth_Auth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AuthRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -556,13 +538,13 @@ func _Auth_Auth_Handler(srv interface{}, ctx context.Context, dec func(interface
 		FullMethod: "/user.Auth/Auth",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).Auth(ctx, req.(*AuthRequest))
+		return srv.(AuthServer).Auth(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Auth_GetUserIdByJwtToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetUserIdByJwtTokenRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -574,7 +556,7 @@ func _Auth_GetUserIdByJwtToken_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/user.Auth/GetUserIdByJwtToken",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AuthServer).GetUserIdByJwtToken(ctx, req.(*GetUserIdByJwtTokenRequest))
+		return srv.(AuthServer).GetUserIdByJwtToken(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -1,23 +1,53 @@
 syntax = "proto3";
 package user;
 import "google/protobuf/empty.proto";
+import "google/api/annotation.proto";
 option go_package = ".";
 
 service User{
-  //yes
-  rpc AddContainerToAccount(AddContainerToAccountRequest) returns (google.protobuf.Empty) {};
-  //no
-  rpc AddBillNumberToAccount(AddContainerToAccountRequest) returns (google.protobuf.Empty) {};
-  //yes
-  rpc DeleteContainersFromAccount(DeleteContainersFromAccountRequest) returns (google.protobuf.Empty) {};
-  //no
-  rpc DeleteBillNumbersFromAccount(DeleteContainersFromAccountRequest) returns (google.protobuf.Empty) {};
-  //yes
-  rpc GetAll(GetAllContainersFromAccountRequest) returns (GetAllContainersResponse) {};
+
+  rpc AddContainerToAccount(AddContainerToAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/user/containers"
+      body: "*"
+    };
+  };
+
+  rpc AddBillNumberToAccount(AddContainerToAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/user/bills"
+      body: "*"
+    };
+  };
+
+  rpc DeleteContainersFromAccount(DeleteContainersFromAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/user/containers"
+      body: "*"
+    };
+  };
+
+  rpc DeleteBillNumbersFromAccount(DeleteContainersFromAccountRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/user/bills"
+      body: "*"
+    };
+  };
+
+  rpc GetAll(google.protobuf.Empty) returns (GetAllContainersResponse) {
+    option (google.api.http) = {
+      get: "/user/all"
+    };
+  };
 }
 
 service UserFeedback{
-  rpc AddFeedback(AddFeedbackRequest) returns (google.protobuf.Empty) {};
+  rpc AddFeedback(AddFeedbackRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/user/feedback",
+      body: "*"
+    };
+  };
 }
 
 message Container{
@@ -25,14 +55,14 @@ message Container{
 }
 message AddContainerToAccountRequest{
   repeated Container container = 1;
-  int64 user_id = 2;
+  //  string user_id = 2;
 }
 message DeleteContainersFromAccountRequest{
-  int64 user_id = 1;
+  //  int64 user_id = 1;
   repeated string numbers = 2;
 }
 message GetAllContainersFromAccountRequest{
-  int64 user_id = 1;
+  //  int64 user_id = 1;
 }
 message ScheduleTrackingObject{
   string time = 1;
@@ -54,20 +84,55 @@ message GetInfoAboutUserResponse{
   GetAllContainersResponse all_containers = 2;
 }
 service Auth{
-  //Yes
-  rpc RegisterUser(RegisterUserRequest) returns (google.protobuf.Empty) {};
-  //Yes
-  rpc LoginUser(LoginUserRequest) returns (LoginResponse) {};
-  //Yes
-  rpc RefreshToken(RefreshTokenRequest) returns (LoginResponse) {};
-  //Yes
-  rpc Auth(AuthRequest) returns (AuthResponse) {};
 
-  rpc GetUserIdByJwtToken(GetUserIdByJwtTokenRequest) returns (GetUserIdByJwtTokenResponse) {};
+  rpc RegisterUser(RegisterUserRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/auth/register"
+      body: "*"
+    };
+  };
 
-  rpc SendRecoveryEmail(SendRecoveryEmailRequest) returns (google.protobuf.Empty) {};
+  rpc LoginUser(LoginUserRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/auth/login"
+      body: "*"
+    };
+  };
 
-  rpc RecoveryUser(RecoveryUserRequest)returns (google.protobuf.Empty) {};
+  rpc RefreshToken(RefreshTokenRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/auth/refresh"
+      body: "*"
+    };
+  };
+
+  rpc Auth(google.protobuf.Empty) returns (AuthResponse) {
+    option (google.api.http) = {
+      post: "/auth/access"
+      body: "*"
+    };
+  };
+
+  rpc GetUserIdByJwtToken(google.protobuf.Empty) returns (GetUserIdByJwtTokenResponse) {
+    option (google.api.http) = {
+      post: "/auth/user"
+      body: "*"
+    };
+  };
+
+  rpc SendRecoveryEmail(SendRecoveryEmailRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/auth/remind"
+      body: "*"
+    };
+  };
+
+  rpc RecoveryUser(RecoveryUserRequest)returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/auth/recovery"
+      body: "*"
+    };
+  };
 }
 message RegisterUserRequest{
   string email = 1;
@@ -89,7 +154,7 @@ message RefreshTokenRequest{
   string refresh_token = 1;
 }
 message AuthRequest{
-  string tokens = 1;
+  string token = 1;
 }
 message AuthResponse{
   bool success = 1;
@@ -102,7 +167,7 @@ message GetUserIdByJwtTokenResponse{
   int64 user_id = 2;
 }
 service ScheduleTracking{
-  //No
+
   rpc MarkBillNoOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerWasArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
@@ -112,11 +177,15 @@ service ScheduleTracking{
   rpc CheckNumberExists(CheckNumberExistsRequest) returns (CheckNumberExistsResponse) {};
 }
 message AddMarkOnTrackingRequest{
-  int64 user_id = 1;
-  string number = 2;
+//  int64 user_id = 1;
+  bool is_container = 2;
+  repeated string numbers = 3;
+  repeated string emails = 4;
+  string email_message_subject = 5;
+  string time = 6;
 }
 message CheckNumberExistsRequest{
-  int64 user_id = 1;
+//  int64 user_id = 1;
   string number = 2;
   bool is_container = 3;
 }

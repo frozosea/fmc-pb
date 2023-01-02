@@ -23,14 +23,13 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ScheduleTrackingClient interface {
-	//yes
 	AddContainersOnTrack(ctx context.Context, in *AddOnTrackRequest, opts ...grpc.CallOption) (*AddOnTrackResponse, error)
-	//yes
 	AddBillNosOnTrack(ctx context.Context, in *AddOnTrackRequest, opts ...grpc.CallOption) (*AddOnTrackResponse, error)
-	Update(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateContainer(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	UpdateBill(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteContainersFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteBillsFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetInfoAboutTrack(ctx context.Context, in *GetInfoAboutTrackRequest, opts ...grpc.CallOption) (*GetInfoAboutTrackResponse, error)
-	//yes
 	GetTimeZone(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTimeZoneResponse, error)
 }
 
@@ -60,18 +59,36 @@ func (c *scheduleTrackingClient) AddBillNosOnTrack(ctx context.Context, in *AddO
 	return out, nil
 }
 
-func (c *scheduleTrackingClient) Update(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *scheduleTrackingClient) UpdateContainer(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/UpdateContainer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *scheduleTrackingClient) DeleteFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *scheduleTrackingClient) UpdateBill(ctx context.Context, in *UpdateTaskRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/DeleteFromTracking", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/UpdateBill", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleTrackingClient) DeleteContainersFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/DeleteContainersFromTracking", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleTrackingClient) DeleteBillsFromTracking(ctx context.Context, in *DeleteFromTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/schedule_tacking.ScheduleTracking/DeleteBillsFromTracking", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -100,14 +117,13 @@ func (c *scheduleTrackingClient) GetTimeZone(ctx context.Context, in *emptypb.Em
 // All implementations must embed UnimplementedScheduleTrackingServer
 // for forward compatibility
 type ScheduleTrackingServer interface {
-	//yes
 	AddContainersOnTrack(context.Context, *AddOnTrackRequest) (*AddOnTrackResponse, error)
-	//yes
 	AddBillNosOnTrack(context.Context, *AddOnTrackRequest) (*AddOnTrackResponse, error)
-	Update(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error)
-	DeleteFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error)
+	UpdateContainer(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error)
+	UpdateBill(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error)
+	DeleteContainersFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error)
+	DeleteBillsFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error)
 	GetInfoAboutTrack(context.Context, *GetInfoAboutTrackRequest) (*GetInfoAboutTrackResponse, error)
-	//yes
 	GetTimeZone(context.Context, *emptypb.Empty) (*GetTimeZoneResponse, error)
 	mustEmbedUnimplementedScheduleTrackingServer()
 }
@@ -122,11 +138,17 @@ func (UnimplementedScheduleTrackingServer) AddContainersOnTrack(context.Context,
 func (UnimplementedScheduleTrackingServer) AddBillNosOnTrack(context.Context, *AddOnTrackRequest) (*AddOnTrackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddBillNosOnTrack not implemented")
 }
-func (UnimplementedScheduleTrackingServer) Update(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (UnimplementedScheduleTrackingServer) UpdateContainer(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateContainer not implemented")
 }
-func (UnimplementedScheduleTrackingServer) DeleteFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteFromTracking not implemented")
+func (UnimplementedScheduleTrackingServer) UpdateBill(context.Context, *UpdateTaskRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateBill not implemented")
+}
+func (UnimplementedScheduleTrackingServer) DeleteContainersFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteContainersFromTracking not implemented")
+}
+func (UnimplementedScheduleTrackingServer) DeleteBillsFromTracking(context.Context, *DeleteFromTrackingRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteBillsFromTracking not implemented")
 }
 func (UnimplementedScheduleTrackingServer) GetInfoAboutTrack(context.Context, *GetInfoAboutTrackRequest) (*GetInfoAboutTrackResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfoAboutTrack not implemented")
@@ -183,38 +205,74 @@ func _ScheduleTracking_AddBillNosOnTrack_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScheduleTracking_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ScheduleTracking_UpdateContainer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateTaskRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScheduleTrackingServer).Update(ctx, in)
+		return srv.(ScheduleTrackingServer).UpdateContainer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/schedule_tacking.ScheduleTracking/Update",
+		FullMethod: "/schedule_tacking.ScheduleTracking/UpdateContainer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScheduleTrackingServer).Update(ctx, req.(*UpdateTaskRequest))
+		return srv.(ScheduleTrackingServer).UpdateContainer(ctx, req.(*UpdateTaskRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScheduleTracking_DeleteFromTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ScheduleTracking_UpdateBill_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateTaskRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleTrackingServer).UpdateBill(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schedule_tacking.ScheduleTracking/UpdateBill",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleTrackingServer).UpdateBill(ctx, req.(*UpdateTaskRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleTracking_DeleteContainersFromTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteFromTrackingRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScheduleTrackingServer).DeleteFromTracking(ctx, in)
+		return srv.(ScheduleTrackingServer).DeleteContainersFromTracking(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/schedule_tacking.ScheduleTracking/DeleteFromTracking",
+		FullMethod: "/schedule_tacking.ScheduleTracking/DeleteContainersFromTracking",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScheduleTrackingServer).DeleteFromTracking(ctx, req.(*DeleteFromTrackingRequest))
+		return srv.(ScheduleTrackingServer).DeleteContainersFromTracking(ctx, req.(*DeleteFromTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleTracking_DeleteBillsFromTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteFromTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleTrackingServer).DeleteBillsFromTracking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/schedule_tacking.ScheduleTracking/DeleteBillsFromTracking",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleTrackingServer).DeleteBillsFromTracking(ctx, req.(*DeleteFromTrackingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -271,12 +329,20 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ScheduleTracking_AddBillNosOnTrack_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _ScheduleTracking_Update_Handler,
+			MethodName: "UpdateContainer",
+			Handler:    _ScheduleTracking_UpdateContainer_Handler,
 		},
 		{
-			MethodName: "DeleteFromTracking",
-			Handler:    _ScheduleTracking_DeleteFromTracking_Handler,
+			MethodName: "UpdateBill",
+			Handler:    _ScheduleTracking_UpdateBill_Handler,
+		},
+		{
+			MethodName: "DeleteContainersFromTracking",
+			Handler:    _ScheduleTracking_DeleteContainersFromTracking_Handler,
+		},
+		{
+			MethodName: "DeleteBillsFromTracking",
+			Handler:    _ScheduleTracking_DeleteBillsFromTracking_Handler,
 		},
 		{
 			MethodName: "GetInfoAboutTrack",
@@ -295,7 +361,7 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ArchiveClient interface {
-	GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*GetAllBillsContainerResponse, error)
+	GetArchive(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllBillsContainerResponse, error)
 }
 
 type archiveClient struct {
@@ -306,7 +372,7 @@ func NewArchiveClient(cc grpc.ClientConnInterface) ArchiveClient {
 	return &archiveClient{cc}
 }
 
-func (c *archiveClient) GetArchive(ctx context.Context, in *GetArchiveRequest, opts ...grpc.CallOption) (*GetAllBillsContainerResponse, error) {
+func (c *archiveClient) GetArchive(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllBillsContainerResponse, error) {
 	out := new(GetAllBillsContainerResponse)
 	err := c.cc.Invoke(ctx, "/schedule_tacking.Archive/GetArchive", in, out, opts...)
 	if err != nil {
@@ -319,7 +385,7 @@ func (c *archiveClient) GetArchive(ctx context.Context, in *GetArchiveRequest, o
 // All implementations must embed UnimplementedArchiveServer
 // for forward compatibility
 type ArchiveServer interface {
-	GetArchive(context.Context, *GetArchiveRequest) (*GetAllBillsContainerResponse, error)
+	GetArchive(context.Context, *emptypb.Empty) (*GetAllBillsContainerResponse, error)
 	mustEmbedUnimplementedArchiveServer()
 }
 
@@ -327,7 +393,7 @@ type ArchiveServer interface {
 type UnimplementedArchiveServer struct {
 }
 
-func (UnimplementedArchiveServer) GetArchive(context.Context, *GetArchiveRequest) (*GetAllBillsContainerResponse, error) {
+func (UnimplementedArchiveServer) GetArchive(context.Context, *emptypb.Empty) (*GetAllBillsContainerResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetArchive not implemented")
 }
 func (UnimplementedArchiveServer) mustEmbedUnimplementedArchiveServer() {}
@@ -344,7 +410,7 @@ func RegisterArchiveServer(s grpc.ServiceRegistrar, srv ArchiveServer) {
 }
 
 func _Archive_GetArchive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetArchiveRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -356,7 +422,7 @@ func _Archive_GetArchive_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/schedule_tacking.Archive/GetArchive",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ArchiveServer).GetArchive(ctx, req.(*GetArchiveRequest))
+		return srv.(ArchiveServer).GetArchive(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

@@ -2,30 +2,43 @@ syntax = "proto3";
 
 package tracking;
 import "google/protobuf/empty.proto";
+import "google/api/annotation.proto";
 option go_package = ".";
 
 service TrackingByContainerNumber{
-  rpc TrackByContainerNumber(Request) returns (TrackingByContainerNumberResponse) {};
+  rpc TrackByContainerNumber(Request) returns (TrackingByContainerNumberResponse) {
+    option (google.api.http) = {
+      post: "/tracking/container",
+      body: "*"
+    };
+  };
 }
 service TrackingByBillNumber{
-  rpc TrackByBillNumber(Request) returns (TrackingByBillNumberResponse) {};
+  rpc TrackByBillNumber(Request) returns (TrackingByBillNumberResponse) {
+    option (google.api.http) = {
+      post: "/tracking/bill",
+      body: "*"
+    };
+  };
 }
 service ScacService{
-  rpc GetContainerScac(google.protobuf.Empty) returns (GetAllScacResponse) {};
-  rpc GetBillScac(google.protobuf.Empty) returns (GetAllScacResponse) {};
+  rpc GetContainerScac(google.protobuf.Empty) returns (GetAllScacResponse) {
+    option (google.api.http) = {
+      get: "/scac/container"
+    };
+  };
+  rpc GetBillScac(google.protobuf.Empty) returns (GetAllScacResponse) {
+    option (google.api.http) = {
+      get: "/scac/bills"
+    };
+  };
 }
 
-
-
-enum Country{
-  RU = 0;
-  OTHER = 1;
-}
 message Request{
   string number = 1;
   string scac = 2;
-  Country country = 3;
 }
+
 message InfoAboutMoving{
   int64 time = 1;
   string operation_name = 2;
@@ -53,5 +66,5 @@ message Scac{
 }
 
 message GetAllScacResponse{
-  repeated Scac all_scac = 1;
+  repeated Scac data = 1;
 }
