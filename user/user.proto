@@ -167,7 +167,6 @@ message GetUserIdByJwtTokenResponse{
   int64 user_id = 2;
 }
 service ScheduleTracking{
-
   rpc MarkBillNoOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerWasArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
@@ -178,6 +177,7 @@ service ScheduleTracking{
 }
 message AddMarkOnTrackingRequest{
   string number = 2;
+  int64 user_id = 3;
 }
 message CheckNumberExistsRequest{
   string number = 2;
