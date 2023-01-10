@@ -18,14 +18,14 @@ service ScheduleTracking{
     };
   };
 
-  rpc UpdateContainer(UpdateTaskRequest) returns (google.protobuf.Empty) {
+  rpc UpdateContainer(AddOnTrackRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       put: "/schedule/containers",
       body: "*"
     };
   };
 
-  rpc UpdateBill(UpdateTaskRequest) returns (google.protobuf.Empty) {
+  rpc UpdateBill(AddOnTrackRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       put: "/schedule/bills",
       body: "*"
@@ -62,49 +62,50 @@ service Archive{
   rpc GetArchive(google.protobuf.Empty) returns (GetAllBillsContainerResponse) {};
 }
 
-message UpdateTrackingTimeRequest{
-  repeated string numbers = 1;
-  string time = 2;
-}
 message AddOnTrackRequest{
   repeated string numbers = 2;
   repeated string emails = 3;
   string email_message_subject = 4;
   string time = 5;
 }
-message UpdateTaskRequest{
-  AddOnTrackRequest req = 1;
-  bool is_containers = 2;
-}
+
 message BaseAddOnTrackResponse{
   bool success = 1;
   string number = 2;
   int64 next_run_time = 3;
 }
+
 message RepeatedBaseAddOnTrackResponse{
   repeated BaseAddOnTrackResponse response = 1;
 }
+
 message AddOnTrackResponse{
   repeated BaseAddOnTrackResponse base_response = 1;
   repeated string already_on_track = 3;
 }
+
 message GetInfoAboutTrackRequest{
   string number = 1;
+  int64 user_id = 2;
 }
+
 message ScheduleTrackingInfo{
   string time = 1;
   repeated string emails = 2;
   string subject = 3;
 }
+
 message GetInfoAboutTrackResponse{
   string number = 2;
   bool is_container = 3;
   bool is_on_track = 4;
   ScheduleTrackingInfo schedule_tracking_info = 5;
 }
+
 message DeleteFromTrackingRequest{
   repeated string numbers = 2;
 }
+
 message GetTimeZoneResponse{
   string time_zone = 1;
 }
@@ -129,6 +130,7 @@ message TrackingByBillNumberResponse{
   repeated InfoAboutMoving info_about_moving = 4;
   int64 eta_final_delivery = 5;
 }
+
 message GetAllBillsContainerResponse{
   repeated TrackingByBillNumberResponse bills = 1;
   repeated TrackingByContainerNumberResponse containers = 2;

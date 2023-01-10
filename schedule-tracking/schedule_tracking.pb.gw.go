@@ -101,7 +101,7 @@ func local_request_ScheduleTracking_AddBillNosOnTrack_0(ctx context.Context, mar
 }
 
 func request_ScheduleTracking_UpdateContainer_0(ctx context.Context, marshaler runtime.Marshaler, client ScheduleTrackingClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateTaskRequest
+	var protoReq AddOnTrackRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -118,7 +118,7 @@ func request_ScheduleTracking_UpdateContainer_0(ctx context.Context, marshaler r
 }
 
 func local_request_ScheduleTracking_UpdateContainer_0(ctx context.Context, marshaler runtime.Marshaler, server ScheduleTrackingServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateTaskRequest
+	var protoReq AddOnTrackRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -135,7 +135,7 @@ func local_request_ScheduleTracking_UpdateContainer_0(ctx context.Context, marsh
 }
 
 func request_ScheduleTracking_UpdateBill_0(ctx context.Context, marshaler runtime.Marshaler, client ScheduleTrackingClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateTaskRequest
+	var protoReq AddOnTrackRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -152,7 +152,7 @@ func request_ScheduleTracking_UpdateBill_0(ctx context.Context, marshaler runtim
 }
 
 func local_request_ScheduleTracking_UpdateBill_0(ctx context.Context, marshaler runtime.Marshaler, server ScheduleTrackingServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq UpdateTaskRequest
+	var protoReq AddOnTrackRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

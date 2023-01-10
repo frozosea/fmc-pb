@@ -104,7 +104,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/schedule_tackingUpdateTaskRequest"
+              "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
             }
           }
         ],
@@ -198,7 +198,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/schedule_tackingUpdateTaskRequest"
+              "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
             }
           }
         ],
@@ -227,10 +227,16 @@
         "parameters": [
           {
             "name": "number",
-            "description": "int64 user_id = 3;",
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -296,8 +302,7 @@
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "title": "int64 user_id = 1;"
+          }
         },
         "emails": {
           "type": "array",
@@ -352,9 +357,7 @@
           "type": "array",
           "items": {
             "type": "string"
-          },
-          "description": "bool is_container = 3;",
-          "title": "int64 user_id = 1;"
+          }
         }
       }
     },
@@ -473,17 +476,6 @@
           "items": {
             "$ref": "#/definitions/schedule_tackingInfoAboutMoving"
           }
-        }
-      }
-    },
-    "schedule_tackingUpdateTaskRequest": {
-      "type": "object",
-      "properties": {
-        "req": {
-          "$ref": "#/definitions/schedule_tackingAddOnTrackRequest"
-        },
-        "isContainers": {
-          "type": "boolean"
         }
       }
     }
