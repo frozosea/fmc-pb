@@ -180,7 +180,8 @@ message AddMarkOnTrackingRequest{
   int64 user_id = 3;
 }
 message CheckNumberExistsRequest{
-  string number = 2;
+  string number = 1;
+  int64 user_id = 2;
   bool is_container = 3;
 }
 message CheckNumberExistsResponse{
