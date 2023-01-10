@@ -65,10 +65,8 @@ service Archive{
 message UpdateTrackingTimeRequest{
   repeated string numbers = 1;
   string time = 2;
-  //  int64 user_id = 3;
 }
 message AddOnTrackRequest{
-  //  int64 user_id = 1;
   repeated string numbers = 2;
   repeated string emails = 3;
   string email_message_subject = 4;
@@ -92,7 +90,6 @@ message AddOnTrackResponse{
 }
 message GetInfoAboutTrackRequest{
   string number = 1;
-  //  int64 user_id = 3;
 }
 message ScheduleTrackingInfo{
   string time = 1;
@@ -106,9 +103,7 @@ message GetInfoAboutTrackResponse{
   ScheduleTrackingInfo schedule_tracking_info = 5;
 }
 message DeleteFromTrackingRequest{
-  //  int64 user_id = 1;
   repeated string numbers = 2;
-  //  bool is_container = 3;
 }
 message GetTimeZoneResponse{
   string time_zone = 1;
