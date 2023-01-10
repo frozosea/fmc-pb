@@ -103,7 +103,7 @@ message GetInfoAboutTrackResponse{
 }
 
 message DeleteFromTrackingRequest{
-  repeated string numbers = 2;
+  repeated string numbers = 1;
 }
 
 message GetTimeZoneResponse{
