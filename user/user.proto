@@ -168,6 +168,8 @@ message GetUserIdByJwtTokenResponse{
 }
 service ScheduleTracking{
   rpc MarkBillNoOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
+  rpc MarkContainerIsNotArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
+  rpc MarkBillIsNotArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerOnTrack(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkContainerWasArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};
   rpc MarkBillNoWasArrived(AddMarkOnTrackingRequest) returns (google.protobuf.Empty) {};

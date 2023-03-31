@@ -642,6 +642,8 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ScheduleTrackingClient interface {
 	MarkBillNoOnTrack(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	MarkContainerIsNotArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	MarkBillIsNotArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MarkContainerOnTrack(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MarkContainerWasArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	MarkBillNoWasArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -661,6 +663,24 @@ func NewScheduleTrackingClient(cc grpc.ClientConnInterface) ScheduleTrackingClie
 func (c *scheduleTrackingClient) MarkBillNoOnTrack(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/user.ScheduleTracking/MarkBillNoOnTrack", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleTrackingClient) MarkContainerIsNotArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/user.ScheduleTracking/MarkContainerIsNotArrived", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *scheduleTrackingClient) MarkBillIsNotArrived(ctx context.Context, in *AddMarkOnTrackingRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/user.ScheduleTracking/MarkBillIsNotArrived", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -726,6 +746,8 @@ func (c *scheduleTrackingClient) CheckNumberExists(ctx context.Context, in *Chec
 // for forward compatibility
 type ScheduleTrackingServer interface {
 	MarkBillNoOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
+	MarkContainerIsNotArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
+	MarkBillIsNotArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
 	MarkContainerOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
 	MarkContainerWasArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
 	MarkBillNoWasArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error)
@@ -741,6 +763,12 @@ type UnimplementedScheduleTrackingServer struct {
 
 func (UnimplementedScheduleTrackingServer) MarkBillNoOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkBillNoOnTrack not implemented")
+}
+func (UnimplementedScheduleTrackingServer) MarkContainerIsNotArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MarkContainerIsNotArrived not implemented")
+}
+func (UnimplementedScheduleTrackingServer) MarkBillIsNotArrived(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MarkBillIsNotArrived not implemented")
 }
 func (UnimplementedScheduleTrackingServer) MarkContainerOnTrack(context.Context, *AddMarkOnTrackingRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method MarkContainerOnTrack not implemented")
@@ -787,6 +815,42 @@ func _ScheduleTracking_MarkBillNoOnTrack_Handler(srv interface{}, ctx context.Co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ScheduleTrackingServer).MarkBillNoOnTrack(ctx, req.(*AddMarkOnTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleTracking_MarkContainerIsNotArrived_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMarkOnTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleTrackingServer).MarkContainerIsNotArrived(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.ScheduleTracking/MarkContainerIsNotArrived",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleTrackingServer).MarkContainerIsNotArrived(ctx, req.(*AddMarkOnTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ScheduleTracking_MarkBillIsNotArrived_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddMarkOnTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ScheduleTrackingServer).MarkBillIsNotArrived(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.ScheduleTracking/MarkBillIsNotArrived",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ScheduleTrackingServer).MarkBillIsNotArrived(ctx, req.(*AddMarkOnTrackingRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -909,6 +973,14 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "MarkBillNoOnTrack",
 			Handler:    _ScheduleTracking_MarkBillNoOnTrack_Handler,
+		},
+		{
+			MethodName: "MarkContainerIsNotArrived",
+			Handler:    _ScheduleTracking_MarkContainerIsNotArrived_Handler,
+		},
+		{
+			MethodName: "MarkBillIsNotArrived",
+			Handler:    _ScheduleTracking_MarkBillIsNotArrived_Handler,
 		},
 		{
 			MethodName: "MarkContainerOnTrack",
