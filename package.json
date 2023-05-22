@@ -1,0 +1,7 @@
+{
+  "name": "fmc-pb",
+  "version": "1.0.0",
+  "dependencies": {
+    "swagger-merge": "^0.4.0"
+  }
+}
