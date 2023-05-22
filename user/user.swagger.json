@@ -631,6 +631,27 @@
         },
         "password": {
           "type": "string"
+        },
+        "companyFullName": {
+          "type": "string"
+        },
+        "companyAbbreviatedName": {
+          "type": "string"
+        },
+        "inn": {
+          "type": "string"
+        },
+        "ogrn": {
+          "type": "string"
+        },
+        "legalAddress": {
+          "type": "string"
+        },
+        "postAddress": {
+          "type": "string"
+        },
+        "workEmail": {
+          "type": "string"
         }
       }
     },

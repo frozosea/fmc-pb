@@ -138,6 +138,13 @@ message RegisterUserRequest{
   string email = 1;
   string username = 2;
   string password = 3;
+  string company_full_name = 4;
+  string company_abbreviated_name = 5;
+  string inn = 6;
+  string ogrn = 7;
+  string legal_address = 8;
+  string post_address = 9;
+  string work_email = 10;
 }
 
 message LoginUserRequest{
