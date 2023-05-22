@@ -1,4 +1,4 @@
-module github.com/frozosea/fmc-pb
+module github.com/frozosea/fmc-pb/v2
 
 go 1.18
 
