@@ -1016,7 +1016,7 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type BalanceClient interface {
 	SubOneDayTrackingPriceFromBalance(ctx context.Context, in *SubBalanceServiceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetTariff(ctx context.Context, in *BaseBalanceServiceRequest, opts ...grpc.CallOption) (*GetTariffResponse, error)
+	GetTariff(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTariffResponse, error)
 	GetBalance(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 }
 
@@ -1037,7 +1037,7 @@ func (c *balanceClient) SubOneDayTrackingPriceFromBalance(ctx context.Context, i
 	return out, nil
 }
 
-func (c *balanceClient) GetTariff(ctx context.Context, in *BaseBalanceServiceRequest, opts ...grpc.CallOption) (*GetTariffResponse, error) {
+func (c *balanceClient) GetTariff(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTariffResponse, error) {
 	out := new(GetTariffResponse)
 	err := c.cc.Invoke(ctx, "/user.Balance/GetTariff", in, out, opts...)
 	if err != nil {
@@ -1060,7 +1060,7 @@ func (c *balanceClient) GetBalance(ctx context.Context, in *emptypb.Empty, opts 
 // for forward compatibility
 type BalanceServer interface {
 	SubOneDayTrackingPriceFromBalance(context.Context, *SubBalanceServiceRequest) (*emptypb.Empty, error)
-	GetTariff(context.Context, *BaseBalanceServiceRequest) (*GetTariffResponse, error)
+	GetTariff(context.Context, *emptypb.Empty) (*GetTariffResponse, error)
 	GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error)
 	mustEmbedUnimplementedBalanceServer()
 }
@@ -1072,7 +1072,7 @@ type UnimplementedBalanceServer struct {
 func (UnimplementedBalanceServer) SubOneDayTrackingPriceFromBalance(context.Context, *SubBalanceServiceRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubOneDayTrackingPriceFromBalance not implemented")
 }
-func (UnimplementedBalanceServer) GetTariff(context.Context, *BaseBalanceServiceRequest) (*GetTariffResponse, error) {
+func (UnimplementedBalanceServer) GetTariff(context.Context, *emptypb.Empty) (*GetTariffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTariff not implemented")
 }
 func (UnimplementedBalanceServer) GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error) {
@@ -1110,7 +1110,7 @@ func _Balance_SubOneDayTrackingPriceFromBalance_Handler(srv interface{}, ctx con
 }
 
 func _Balance_GetTariff_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BaseBalanceServiceRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1122,7 +1122,7 @@ func _Balance_GetTariff_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/user.Balance/GetTariff",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BalanceServer).GetTariff(ctx, req.(*BaseBalanceServiceRequest))
+		return srv.(BalanceServer).GetTariff(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

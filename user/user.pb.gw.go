@@ -799,7 +799,7 @@ func local_request_Balance_SubOneDayTrackingPriceFromBalance_0(ctx context.Conte
 }
 
 func request_Balance_GetTariff_0(ctx context.Context, marshaler runtime.Marshaler, client BalanceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq BaseBalanceServiceRequest
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -816,7 +816,7 @@ func request_Balance_GetTariff_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_Balance_GetTariff_0(ctx context.Context, marshaler runtime.Marshaler, server BalanceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq BaseBalanceServiceRequest
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)

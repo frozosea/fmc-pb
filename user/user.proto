@@ -212,7 +212,7 @@ message RecoveryUserRequest{
 
 service Balance{
   rpc SubOneDayTrackingPriceFromBalance(SubBalanceServiceRequest) returns (google.protobuf.Empty) {};
-  rpc GetTariff(BaseBalanceServiceRequest) returns (GetTariffResponse) {
+  rpc GetTariff(google.protobuf.Empty) returns (GetTariffResponse) {
     option (google.api.http) = {
       post: "/user/tariff"
       body: "*"
@@ -225,9 +225,6 @@ service Balance{
   };
 }
 
-message BaseBalanceServiceRequest{
-  int64 user_id = 1;
-}
 message SubBalanceServiceRequest{
   int64 user_id = 1;
   string number = 2;

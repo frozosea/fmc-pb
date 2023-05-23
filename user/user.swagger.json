@@ -485,7 +485,8 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/userBaseBalanceServiceRequest"
+              "type": "object",
+              "properties": {}
             }
           }
         ],
@@ -551,15 +552,6 @@
       "properties": {
         "success": {
           "type": "boolean"
-        }
-      }
-    },
-    "userBaseBalanceServiceRequest": {
-      "type": "object",
-      "properties": {
-        "userId": {
-          "type": "string",
-          "format": "int64"
         }
       }
     },
