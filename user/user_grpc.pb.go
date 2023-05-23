@@ -1017,7 +1017,7 @@ var ScheduleTracking_ServiceDesc = grpc.ServiceDesc{
 type BalanceClient interface {
 	SubOneDayTrackingPriceFromBalance(ctx context.Context, in *SubBalanceServiceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTariff(ctx context.Context, in *BaseBalanceServiceRequest, opts ...grpc.CallOption) (*GetTariffResponse, error)
-	GetBalance(ctx context.Context, in *BaseBalanceServiceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	GetBalance(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 }
 
 type balanceClient struct {
@@ -1046,7 +1046,7 @@ func (c *balanceClient) GetTariff(ctx context.Context, in *BaseBalanceServiceReq
 	return out, nil
 }
 
-func (c *balanceClient) GetBalance(ctx context.Context, in *BaseBalanceServiceRequest, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
+func (c *balanceClient) GetBalance(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBalanceResponse, error) {
 	out := new(GetBalanceResponse)
 	err := c.cc.Invoke(ctx, "/user.Balance/GetBalance", in, out, opts...)
 	if err != nil {
@@ -1061,7 +1061,7 @@ func (c *balanceClient) GetBalance(ctx context.Context, in *BaseBalanceServiceRe
 type BalanceServer interface {
 	SubOneDayTrackingPriceFromBalance(context.Context, *SubBalanceServiceRequest) (*emptypb.Empty, error)
 	GetTariff(context.Context, *BaseBalanceServiceRequest) (*GetTariffResponse, error)
-	GetBalance(context.Context, *BaseBalanceServiceRequest) (*GetBalanceResponse, error)
+	GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -1075,7 +1075,7 @@ func (UnimplementedBalanceServer) SubOneDayTrackingPriceFromBalance(context.Cont
 func (UnimplementedBalanceServer) GetTariff(context.Context, *BaseBalanceServiceRequest) (*GetTariffResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetTariff not implemented")
 }
-func (UnimplementedBalanceServer) GetBalance(context.Context, *BaseBalanceServiceRequest) (*GetBalanceResponse, error) {
+func (UnimplementedBalanceServer) GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
@@ -1128,7 +1128,7 @@ func _Balance_GetTariff_Handler(srv interface{}, ctx context.Context, dec func(i
 }
 
 func _Balance_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(BaseBalanceServiceRequest)
+	in := new(emptypb.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1140,7 +1140,7 @@ func _Balance_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/user.Balance/GetBalance",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BalanceServer).GetBalance(ctx, req.(*BaseBalanceServiceRequest))
+		return srv.(BalanceServer).GetBalance(ctx, req.(*emptypb.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

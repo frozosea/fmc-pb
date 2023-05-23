@@ -280,7 +280,7 @@
       }
     },
     "/user/balance": {
-      "post": {
+      "get": {
         "operationId": "Balance_GetBalance",
         "responses": {
           "200": {
@@ -296,16 +296,6 @@
             }
           }
         },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/userBaseBalanceServiceRequest"
-            }
-          }
-        ],
         "tags": [
           "Balance"
         ]
