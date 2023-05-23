@@ -39,6 +39,11 @@ service User{
       get: "/user/all"
     };
   };
+  rpc GetInfoAboutUser(google.protobuf.Empty) returns (GetInfoAboutUserResponse){
+    option (google.api.http) = {
+      get: "/user/info"
+    };
+  };
 }
 
 service UserFeedback{
@@ -80,8 +85,18 @@ message GetAllContainersResponse{
   repeated ContainerResponse containers = 2;
 }
 message GetInfoAboutUserResponse{
-  string username = 1;
-  GetAllContainersResponse all_containers = 2;
+  int64 id = 1;
+  string email = 2;
+  string username = 3;
+  string company_full_name = 4;
+  string company_abbreviated_name = 5;
+  string inn = 6;
+  string ogrn = 7;
+  string legal_address = 8;
+  string post_address = 9;
+  string work_email = 10;
+  float one_day_tracking_price = 11;
+  GetAllContainersResponse numbers = 12;
 }
 service Auth{
 
@@ -133,6 +148,7 @@ service Auth{
       body: "*"
     };
   };
+
 }
 message RegisterUserRequest{
   string email = 1;

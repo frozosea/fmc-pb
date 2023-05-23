@@ -462,6 +462,28 @@
         ]
       }
     },
+    "/user/info": {
+      "get": {
+        "operationId": "User_GetInfoAboutUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetInfoAboutUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/user/tariff": {
       "post": {
         "operationId": "Balance_GetTariff",
@@ -631,6 +653,49 @@
         "balance": {
           "type": "number",
           "format": "float"
+        }
+      }
+    },
+    "userGetInfoAboutUserResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "companyFullName": {
+          "type": "string"
+        },
+        "companyAbbreviatedName": {
+          "type": "string"
+        },
+        "inn": {
+          "type": "string"
+        },
+        "ogrn": {
+          "type": "string"
+        },
+        "legalAddress": {
+          "type": "string"
+        },
+        "postAddress": {
+          "type": "string"
+        },
+        "workEmail": {
+          "type": "string"
+        },
+        "oneDayTrackingPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "numbers": {
+          "$ref": "#/definitions/userGetAllContainersResponse"
         }
       }
     },

@@ -28,6 +28,7 @@ type UserClient interface {
 	DeleteContainersFromAccount(ctx context.Context, in *DeleteContainersFromAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteBillNumbersFromAccount(ctx context.Context, in *DeleteContainersFromAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllContainersResponse, error)
+	GetInfoAboutUser(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetInfoAboutUserResponse, error)
 }
 
 type userClient struct {
@@ -83,6 +84,15 @@ func (c *userClient) GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc
 	return out, nil
 }
 
+func (c *userClient) GetInfoAboutUser(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetInfoAboutUserResponse, error) {
+	out := new(GetInfoAboutUserResponse)
+	err := c.cc.Invoke(ctx, "/user.User/GetInfoAboutUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -92,6 +102,7 @@ type UserServer interface {
 	DeleteContainersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error)
 	DeleteBillNumbersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error)
 	GetAll(context.Context, *emptypb.Empty) (*GetAllContainersResponse, error)
+	GetInfoAboutUser(context.Context, *emptypb.Empty) (*GetInfoAboutUserResponse, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -113,6 +124,9 @@ func (UnimplementedUserServer) DeleteBillNumbersFromAccount(context.Context, *De
 }
 func (UnimplementedUserServer) GetAll(context.Context, *emptypb.Empty) (*GetAllContainersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAll not implemented")
+}
+func (UnimplementedUserServer) GetInfoAboutUser(context.Context, *emptypb.Empty) (*GetInfoAboutUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetInfoAboutUser not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -217,6 +231,24 @@ func _User_GetAll_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_GetInfoAboutUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).GetInfoAboutUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.User/GetInfoAboutUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).GetInfoAboutUser(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -243,6 +275,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAll",
 			Handler:    _User_GetAll_Handler,
+		},
+		{
+			MethodName: "GetInfoAboutUser",
+			Handler:    _User_GetInfoAboutUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
