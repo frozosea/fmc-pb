@@ -16,6 +16,9 @@
     },
     {
       "name": "ScheduleTracking"
+    },
+    {
+      "name": "Balance"
     }
   ],
   "consumes": [
@@ -276,6 +279,38 @@
         ]
       }
     },
+    "/user/balance": {
+      "post": {
+        "operationId": "Balance_GetBalance",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetBalanceResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userBaseBalanceServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Balance"
+        ]
+      }
+    },
     "/user/bills": {
       "delete": {
         "operationId": "User_DeleteBillNumbersFromAccount",
@@ -436,6 +471,38 @@
           "UserFeedback"
         ]
       }
+    },
+    "/user/tariff": {
+      "post": {
+        "operationId": "Balance_GetTariff",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetTariffResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userBaseBalanceServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Balance"
+        ]
+      }
     }
   },
   "definitions": {
@@ -494,6 +561,15 @@
       "properties": {
         "success": {
           "type": "boolean"
+        }
+      }
+    },
+    "userBaseBalanceServiceRequest": {
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -556,6 +632,28 @@
           "items": {
             "$ref": "#/definitions/userContainerResponse"
           }
+        }
+      }
+    },
+    "userGetBalanceResponse": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "userGetTariffResponse": {
+      "type": "object",
+      "properties": {
+        "oneDayTrackingPrice": {
+          "type": "number",
+          "format": "float"
+        },
+        "numbersOnTrack": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
