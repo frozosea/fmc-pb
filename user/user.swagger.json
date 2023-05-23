@@ -555,6 +555,14 @@
         }
       }
     },
+    "userCheckAccessToPaidTrackingResponse": {
+      "type": "object",
+      "properties": {
+        "hasAccess": {
+          "type": "boolean"
+        }
+      }
+    },
     "userCheckNumberExistsResponse": {
       "type": "object",
       "properties": {

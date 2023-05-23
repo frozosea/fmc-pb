@@ -1018,6 +1018,7 @@ type BalanceClient interface {
 	SubOneDayTrackingPriceFromBalance(ctx context.Context, in *SubBalanceServiceRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetTariff(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTariffResponse, error)
 	GetBalance(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBalanceResponse, error)
+	CheckAccessToPaidTracking(ctx context.Context, in *CheckAccessToPaidTrackingRequest, opts ...grpc.CallOption) (*CheckAccessToPaidTrackingResponse, error)
 }
 
 type balanceClient struct {
@@ -1055,6 +1056,15 @@ func (c *balanceClient) GetBalance(ctx context.Context, in *emptypb.Empty, opts 
 	return out, nil
 }
 
+func (c *balanceClient) CheckAccessToPaidTracking(ctx context.Context, in *CheckAccessToPaidTrackingRequest, opts ...grpc.CallOption) (*CheckAccessToPaidTrackingResponse, error) {
+	out := new(CheckAccessToPaidTrackingResponse)
+	err := c.cc.Invoke(ctx, "/user.Balance/CheckAccessToPaidTracking", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility
@@ -1062,6 +1072,7 @@ type BalanceServer interface {
 	SubOneDayTrackingPriceFromBalance(context.Context, *SubBalanceServiceRequest) (*emptypb.Empty, error)
 	GetTariff(context.Context, *emptypb.Empty) (*GetTariffResponse, error)
 	GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error)
+	CheckAccessToPaidTracking(context.Context, *CheckAccessToPaidTrackingRequest) (*CheckAccessToPaidTrackingResponse, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -1077,6 +1088,9 @@ func (UnimplementedBalanceServer) GetTariff(context.Context, *emptypb.Empty) (*G
 }
 func (UnimplementedBalanceServer) GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBalance not implemented")
+}
+func (UnimplementedBalanceServer) CheckAccessToPaidTracking(context.Context, *CheckAccessToPaidTrackingRequest) (*CheckAccessToPaidTrackingResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAccessToPaidTracking not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 
@@ -1145,6 +1159,24 @@ func _Balance_GetBalance_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_CheckAccessToPaidTracking_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAccessToPaidTrackingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).CheckAccessToPaidTracking(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.Balance/CheckAccessToPaidTracking",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).CheckAccessToPaidTracking(ctx, req.(*CheckAccessToPaidTrackingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1163,6 +1195,10 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBalance",
 			Handler:    _Balance_GetBalance_Handler,
+		},
+		{
+			MethodName: "CheckAccessToPaidTracking",
+			Handler:    _Balance_CheckAccessToPaidTracking_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
