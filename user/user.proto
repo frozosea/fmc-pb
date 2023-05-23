@@ -44,6 +44,12 @@ service User{
       get: "/user/info"
     };
   };
+  rpc UpdateCompanyData(UpdateCompanyDataRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/company/info"
+      body: "*"
+    };
+  };
 }
 
 service UserFeedback{
@@ -54,7 +60,16 @@ service UserFeedback{
     };
   };
 }
-
+message UpdateCompanyDataRequest{
+  string email = 2;
+  string company_full_name = 4;
+  string company_abbreviated_name = 5;
+  string inn = 6;
+  string ogrn = 7;
+  string legal_address = 8;
+  string post_address = 9;
+  string work_email = 10;
+}
 message Container{
   string number = 1;
 }

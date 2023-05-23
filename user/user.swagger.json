@@ -257,6 +257,39 @@
         ]
       }
     },
+    "/company/info": {
+      "put": {
+        "operationId": "User_UpdateCompanyData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userUpdateCompanyDataRequest"
+            }
+          }
+        ],
+        "tags": [
+          "User"
+        ]
+      }
+    },
     "/user/all": {
       "get": {
         "operationId": "User_GetAll",
@@ -829,6 +862,35 @@
       "type": "object",
       "properties": {
         "email": {
+          "type": "string"
+        }
+      }
+    },
+    "userUpdateCompanyDataRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "companyFullName": {
+          "type": "string"
+        },
+        "companyAbbreviatedName": {
+          "type": "string"
+        },
+        "inn": {
+          "type": "string"
+        },
+        "ogrn": {
+          "type": "string"
+        },
+        "legalAddress": {
+          "type": "string"
+        },
+        "postAddress": {
+          "type": "string"
+        },
+        "workEmail": {
           "type": "string"
         }
       }

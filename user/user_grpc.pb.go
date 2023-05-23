@@ -29,6 +29,7 @@ type UserClient interface {
 	DeleteBillNumbersFromAccount(ctx context.Context, in *DeleteContainersFromAccountRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetAll(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetAllContainersResponse, error)
 	GetInfoAboutUser(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetInfoAboutUserResponse, error)
+	UpdateCompanyData(ctx context.Context, in *UpdateCompanyDataRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type userClient struct {
@@ -93,6 +94,15 @@ func (c *userClient) GetInfoAboutUser(ctx context.Context, in *emptypb.Empty, op
 	return out, nil
 }
 
+func (c *userClient) UpdateCompanyData(ctx context.Context, in *UpdateCompanyDataRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/user.User/UpdateCompanyData", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServer is the server API for User service.
 // All implementations must embed UnimplementedUserServer
 // for forward compatibility
@@ -103,6 +113,7 @@ type UserServer interface {
 	DeleteBillNumbersFromAccount(context.Context, *DeleteContainersFromAccountRequest) (*emptypb.Empty, error)
 	GetAll(context.Context, *emptypb.Empty) (*GetAllContainersResponse, error)
 	GetInfoAboutUser(context.Context, *emptypb.Empty) (*GetInfoAboutUserResponse, error)
+	UpdateCompanyData(context.Context, *UpdateCompanyDataRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedUserServer()
 }
 
@@ -127,6 +138,9 @@ func (UnimplementedUserServer) GetAll(context.Context, *emptypb.Empty) (*GetAllC
 }
 func (UnimplementedUserServer) GetInfoAboutUser(context.Context, *emptypb.Empty) (*GetInfoAboutUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetInfoAboutUser not implemented")
+}
+func (UnimplementedUserServer) UpdateCompanyData(context.Context, *UpdateCompanyDataRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompanyData not implemented")
 }
 func (UnimplementedUserServer) mustEmbedUnimplementedUserServer() {}
 
@@ -249,6 +263,24 @@ func _User_GetInfoAboutUser_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _User_UpdateCompanyData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCompanyDataRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServer).UpdateCompanyData(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.User/UpdateCompanyData",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServer).UpdateCompanyData(ctx, req.(*UpdateCompanyDataRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // User_ServiceDesc is the grpc.ServiceDesc for User service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -279,6 +311,10 @@ var User_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetInfoAboutUser",
 			Handler:    _User_GetInfoAboutUser_Handler,
+		},
+		{
+			MethodName: "UpdateCompanyData",
+			Handler:    _User_UpdateCompanyData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
