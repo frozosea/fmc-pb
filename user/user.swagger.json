@@ -723,9 +723,8 @@
         "workEmail": {
           "type": "string"
         },
-        "oneDayTrackingPrice": {
-          "type": "number",
-          "format": "float"
+        "tariff": {
+          "$ref": "#/definitions/userTariff"
         },
         "numbers": {
           "$ref": "#/definitions/userGetAllContainersResponse"
@@ -866,12 +865,22 @@
         }
       }
     },
+    "userTariff": {
+      "type": "object",
+      "properties": {
+        "numbersOnTracking": {
+          "type": "string",
+          "format": "int64"
+        },
+        "oneDayTrackingPrice": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
     "userUpdateCompanyDataRequest": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
-        },
         "companyFullName": {
           "type": "string"
         },
