@@ -1091,6 +1091,9 @@ type BalanceClient interface {
 	GetTariff(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetTariffResponse, error)
 	GetBalance(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetBalanceResponse, error)
 	CheckAccessToPaidTracking(ctx context.Context, in *CheckAccessToPaidTrackingRequest, opts ...grpc.CallOption) (*CheckAccessToPaidTrackingResponse, error)
+	GetMoneySpent(ctx context.Context, in *GetMoneySpendRequest, opts ...grpc.CallOption) (*GetMoneySpendResponse, error)
+	GetMoneySpentByMonth(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMoneySpendByDatesResponse, error)
+	GetMoneySpentByDates(ctx context.Context, in *GetMoneySpendByDatesRequest, opts ...grpc.CallOption) (*GetMoneySpendByDatesResponse, error)
 }
 
 type balanceClient struct {
@@ -1137,6 +1140,33 @@ func (c *balanceClient) CheckAccessToPaidTracking(ctx context.Context, in *Check
 	return out, nil
 }
 
+func (c *balanceClient) GetMoneySpent(ctx context.Context, in *GetMoneySpendRequest, opts ...grpc.CallOption) (*GetMoneySpendResponse, error) {
+	out := new(GetMoneySpendResponse)
+	err := c.cc.Invoke(ctx, "/user.Balance/GetMoneySpent", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetMoneySpentByMonth(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetMoneySpendByDatesResponse, error) {
+	out := new(GetMoneySpendByDatesResponse)
+	err := c.cc.Invoke(ctx, "/user.Balance/GetMoneySpentByMonth", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *balanceClient) GetMoneySpentByDates(ctx context.Context, in *GetMoneySpendByDatesRequest, opts ...grpc.CallOption) (*GetMoneySpendByDatesResponse, error) {
+	out := new(GetMoneySpendByDatesResponse)
+	err := c.cc.Invoke(ctx, "/user.Balance/GetMoneySpentByDates", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BalanceServer is the server API for Balance service.
 // All implementations must embed UnimplementedBalanceServer
 // for forward compatibility
@@ -1145,6 +1175,9 @@ type BalanceServer interface {
 	GetTariff(context.Context, *emptypb.Empty) (*GetTariffResponse, error)
 	GetBalance(context.Context, *emptypb.Empty) (*GetBalanceResponse, error)
 	CheckAccessToPaidTracking(context.Context, *CheckAccessToPaidTrackingRequest) (*CheckAccessToPaidTrackingResponse, error)
+	GetMoneySpent(context.Context, *GetMoneySpendRequest) (*GetMoneySpendResponse, error)
+	GetMoneySpentByMonth(context.Context, *emptypb.Empty) (*GetMoneySpendByDatesResponse, error)
+	GetMoneySpentByDates(context.Context, *GetMoneySpendByDatesRequest) (*GetMoneySpendByDatesResponse, error)
 	mustEmbedUnimplementedBalanceServer()
 }
 
@@ -1163,6 +1196,15 @@ func (UnimplementedBalanceServer) GetBalance(context.Context, *emptypb.Empty) (*
 }
 func (UnimplementedBalanceServer) CheckAccessToPaidTracking(context.Context, *CheckAccessToPaidTrackingRequest) (*CheckAccessToPaidTrackingResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CheckAccessToPaidTracking not implemented")
+}
+func (UnimplementedBalanceServer) GetMoneySpent(context.Context, *GetMoneySpendRequest) (*GetMoneySpendResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMoneySpent not implemented")
+}
+func (UnimplementedBalanceServer) GetMoneySpentByMonth(context.Context, *emptypb.Empty) (*GetMoneySpendByDatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMoneySpentByMonth not implemented")
+}
+func (UnimplementedBalanceServer) GetMoneySpentByDates(context.Context, *GetMoneySpendByDatesRequest) (*GetMoneySpendByDatesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMoneySpentByDates not implemented")
 }
 func (UnimplementedBalanceServer) mustEmbedUnimplementedBalanceServer() {}
 
@@ -1249,6 +1291,60 @@ func _Balance_CheckAccessToPaidTracking_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Balance_GetMoneySpent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMoneySpendRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetMoneySpent(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.Balance/GetMoneySpent",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetMoneySpent(ctx, req.(*GetMoneySpendRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetMoneySpentByMonth_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetMoneySpentByMonth(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.Balance/GetMoneySpentByMonth",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetMoneySpentByMonth(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Balance_GetMoneySpentByDates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMoneySpendByDatesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BalanceServer).GetMoneySpentByDates(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/user.Balance/GetMoneySpentByDates",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BalanceServer).GetMoneySpentByDates(ctx, req.(*GetMoneySpendByDatesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Balance_ServiceDesc is the grpc.ServiceDesc for Balance service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1271,6 +1367,18 @@ var Balance_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckAccessToPaidTracking",
 			Handler:    _Balance_CheckAccessToPaidTracking_Handler,
+		},
+		{
+			MethodName: "GetMoneySpent",
+			Handler:    _Balance_GetMoneySpent_Handler,
+		},
+		{
+			MethodName: "GetMoneySpentByMonth",
+			Handler:    _Balance_GetMoneySpentByMonth_Handler,
+		},
+		{
+			MethodName: "GetMoneySpentByDates",
+			Handler:    _Balance_GetMoneySpentByDates_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

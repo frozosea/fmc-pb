@@ -257,6 +257,71 @@
         ]
       }
     },
+    "/balance/info/byDates": {
+      "post": {
+        "operationId": "Balance_GetMoneySpentByDates",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetMoneySpendByDatesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userGetMoneySpendByDatesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Balance"
+        ]
+      }
+    },
+    "/balance/info/byMonth": {
+      "post": {
+        "operationId": "Balance_GetMoneySpentByMonth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/userGetMoneySpendByDatesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "tags": [
+          "Balance"
+        ]
+      }
+    },
     "/company/info": {
       "put": {
         "operationId": "User_UpdateCompanyData",
@@ -648,6 +713,9 @@
         },
         "scheduleTrackingObject": {
           "$ref": "#/definitions/userScheduleTrackingObject"
+        },
+        "moneySpend": {
+          "$ref": "#/definitions/userGetMoneySpendResponse"
         }
       }
     },
@@ -728,6 +796,62 @@
         },
         "numbers": {
           "$ref": "#/definitions/userGetAllContainersResponse"
+        }
+      }
+    },
+    "userGetMoneySpendByDatesRequest": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "fromDate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "toDate": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "userGetMoneySpendByDatesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userGetMoneySpendResponse"
+          }
+        }
+      }
+    },
+    "userGetMoneySpendResponse": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "isContainer": {
+          "type": "boolean"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "moneySpend": {
+          "type": "number",
+          "format": "float"
+        },
+        "daysOnTracking": {
+          "type": "string",
+          "format": "int64"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/userTransaction"
+          }
         }
       }
     },
@@ -875,6 +999,30 @@
         "oneDayTrackingPrice": {
           "type": "number",
           "format": "float"
+        }
+      }
+    },
+    "userTransaction": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "userId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "number": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number",
+          "format": "float"
+        },
+        "date": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },

@@ -93,6 +93,7 @@ message ContainerResponse{
   bool is_on_track = 2;
   bool is_container = 3;
   ScheduleTrackingObject scheduleTrackingObject = 4;
+  GetMoneySpendResponse money_spend = 5;
 }
 message GetAllContainersResponse{
   repeated ContainerResponse bill_numbers = 1;
@@ -260,6 +261,19 @@ service Balance{
     };
   };
   rpc CheckAccessToPaidTracking(CheckAccessToPaidTrackingRequest) returns (CheckAccessToPaidTrackingResponse) {};
+  rpc GetMoneySpent(GetMoneySpendRequest) returns (GetMoneySpendResponse) {};
+  rpc GetMoneySpentByMonth(google.protobuf.Empty) returns (GetMoneySpendByDatesResponse) {
+    option (google.api.http) = {
+      post: "/balance/info/byMonth",
+      body: "*"
+    };
+  };
+  rpc GetMoneySpentByDates(GetMoneySpendByDatesRequest) returns (GetMoneySpendByDatesResponse) {
+    option (google.api.http) = {
+      post: "/balance/info/byDates",
+      body: "*"
+    };
+  };
 
 }
 message CheckAccessToPaidTrackingRequest{
@@ -278,4 +292,30 @@ message GetTariffResponse{
 }
 message GetBalanceResponse{
   float balance = 1;
+}
+message GetMoneySpendRequest{
+  string number = 2;
+}
+message Transaction{
+  int64 id = 1;
+  int64 user_id = 2;
+  string number = 3;
+  float price = 4;
+  int64 date = 5;
+}
+message GetMoneySpendResponse{
+  string number = 1;
+  bool is_container = 2;
+  int64 user_id = 3;
+  float money_spend = 4;
+  int64 days_on_tracking = 5 ;
+  repeated Transaction transactions = 6;
+}
+message GetMoneySpendByDatesResponse{
+  repeated GetMoneySpendResponse data = 1;
+}
+message GetMoneySpendByDatesRequest{
+  string number = 2;
+  int64 from_date = 3;
+  int64 to_date = 4;
 }
